@@ -1,4 +1,4 @@
-package com.nttdata.pcf.dev.shopizer.shoppingcartservice.Application;
+package com.nttdata.pcf.dev.shopizer.shoppingcartservice.application;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,15 +7,20 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 @SpringBootApplication
+@EnableAutoConfiguration
+@PropertySource({"classpath:application.properties"})
 public class ShoppingcartServiceApplication extends JpaBaseConfiguration{
 
 	protected ShoppingcartServiceApplication(DataSource dataSource, JpaProperties properties,
@@ -35,7 +40,6 @@ public class ShoppingcartServiceApplication extends JpaBaseConfiguration{
 
 	@Override
 	protected Map<String, Object> getVendorProperties() {
-		// TODO Auto-generated method stub
 		Map<String, Object> vendorProperties = new LinkedHashMap<>();
         vendorProperties.putAll(getProperties().getHibernateProperties(getDataSource()));
         return vendorProperties;
